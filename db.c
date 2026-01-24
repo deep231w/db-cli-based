@@ -11,8 +11,11 @@ typedef struct
 }user;
 
 
-void addUserTodb(){
+void addUserTodb(char *id , char *name , char *age){
+
     
+    printf("user data inside addusertodb func- %s %s %s", id , name , age);
+
     printf("user added to db successfully!\n");
 }
 
@@ -49,7 +52,7 @@ int main(){
             char *name= strtok(NULL , " ");
             char *age= strtok(NULL , " ");
 
-            addUserTodb();
+            addUserTodb(id , name , age);
         }
         
     }
