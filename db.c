@@ -26,6 +26,7 @@ void addUserTodb(int lid , char *lname , int lage){
     for(int i=0; i<db_users ;i++){
     	if(db[i]->id==lid){
 	   printf("the same id is already exist already , please add different id\n");
+	   free(ptr);
 	   return;
 	}
     }
