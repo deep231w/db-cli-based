@@ -22,6 +22,13 @@ void addUserTodb(int lid , char *lname , int lage){
     	printf("memory allocation failed!\n");
 	return;
     }  
+	
+    for(int i=0; i<db_users ;i++){
+    	if(db[i]->id==lid){
+	   printf("the same id is already exist already , please add different id\n");
+	   return;
+	}
+    }
 
     ptr->id=lid;
     //for(int i=0; i<sizeof(lname);i++){
@@ -31,7 +38,7 @@ void addUserTodb(int lid , char *lname , int lage){
     ptr->age=lage;
     
     db[db_users++]=ptr;
-    printf("user data inside addusertodb func- %d %s %d", lid , lname , lage);
+    printf("user data inside addusertodb func- %d %s %d\n", lid , lname , lage); 
 
     printf("user added to db successfully!\n");
 }
@@ -42,6 +49,7 @@ void ListAllUsers(){
 		printf("%d %s %d\n", db[i]->id ,db[i]->name, db[i]->age);
 	}
 }
+
 int main(){
     char input[MAX_INPUT];
 
