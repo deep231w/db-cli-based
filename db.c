@@ -51,6 +51,15 @@ void ListAllUsers(){
 	}
 }
 
+//find from db
+void findById(int lid){
+	for(int i=0; i<db_users;i++){
+		if(db[i]->id == lid){
+			printf("id=%d ,name:%s , age:%d \n", db[i]->id, db[i]->name ,db[i]->age);
+			return;
+		}
+	}
+}
 int main(){
     char input[MAX_INPUT];
 
@@ -98,6 +107,12 @@ int main(){
 	if(strcmp(token, "list")==0){
 		printf("inside list ");
 		ListAllUsers();
+	}
+
+	if(strcmp(token, "find")== 0){
+		char *id_str= strtok(NULL, " ");
+		int id=atoi(id_str);
+		findById(id);
 	}
     }
     
