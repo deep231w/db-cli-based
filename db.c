@@ -86,10 +86,12 @@ int updateById(){
 	while(1){
 		int lid;
 		int input;
+		char buf[32];
 
 		printf("please enter id to update user\n");
-		scanf("%d",&lid);
-
+		//scanf("%d",&lid);
+		fgets(buf, sizeof(buf),stdin);
+		lid=atoi(buf);
 		if(!lid){
 			continue;
 		}
@@ -115,11 +117,17 @@ int updateById(){
 		printf("(1)name\n");
 		printf("(2)age\n");
 		printf("(0)exit\n");
-		scanf("%d",&input);
+		fgets(buf, sizeof(buf), stdin);
+		input=atoi(buf);
+
+		//scanf("%d",&input);
 		if(input==1){
 			char lname[20];
 			printf("please enter new Name: ");
-			scanf("%s",&lname);
+			//scanf("%s",&lname);
+			fgets(lname , sizeof(lname), stdin);
+			lname[strcspn(lname, "\n")]=0;
+
 			strcpy(db[index]->name,lname);
 			printf("name updated\n");
 			continue;
@@ -127,7 +135,9 @@ int updateById(){
 		else if(input==2){
 			int lage;
 			printf("please enter new Age:");
-			scanf("%d", &lage);
+			//scanf("%d", &lage);
+			fgets(buf, sizeof(buf), stdin);
+			lage=atoi(buf);
 			db[index]->age=lage;
 			printf("age updated successfully! \n");
 			continue;
@@ -170,7 +180,7 @@ int main(){
         // }
 
         if(!token){
-            return 0;
+            continue;
         }
 
         if(strcmp(token, "add")==0){
