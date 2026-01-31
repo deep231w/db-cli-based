@@ -60,6 +60,7 @@ void findById(int lid){
 		}
 	}
 }
+//delete/remove user  by id
 void deleteById(int lid){
 	printf("inside delete fun id is %d", lid);
 	int index;
@@ -80,7 +81,70 @@ void deleteById(int lid){
 
 	printf("id:%d , user deleted susccessfuly !\n", lid);
 }
+//update by id
+int updateById(){
+	while(1){
+		int lid;
+		int input;
 
+		printf("please enter id to update user\n");
+		scanf("%d",&lid);
+
+		if(!lid){
+			continue;
+		}
+
+	
+		int index;
+		int found=0;
+		for (int i=0; i<db_users; i++){
+			if(db[i]->id ==lid){
+				printf("current user ID: %d , NAME: %s , AGE: %d\n", db[i]->id , db[i]->name , db[i]->age);
+				index=i;
+				found=1;
+				break;
+			}
+		}
+
+		if(found==0){
+			printf("user not found!\n");
+			continue;
+		}
+
+		printf("please enter command to continue- \n");
+		printf("(1)name\n");
+		printf("(2)age\n");
+		printf("(0)exit\n");
+		scanf("%d",&input);
+		if(input==1){
+			char lname[20];
+			printf("please enter new Name: ");
+			scanf("%s",&lname);
+			strcpy(db[index]->name,lname);
+			printf("name updated\n");
+			continue;
+		}
+		else if(input==2){
+			int lage;
+			printf("please enter new Age:");
+			scanf("%d", &lage);
+			db[index]->age=lage;
+			printf("age updated successfully! \n");
+			continue;
+		}
+		else if(input==0){
+			printf("exiting ....\n");
+			return 0;
+		}
+		else{
+			printf("wrong command please try again!\n");
+			continue;
+		}
+	}
+	return 0;
+
+
+}
 int main(){
     char input[MAX_INPUT];
 
@@ -143,7 +207,9 @@ int main(){
 		deleteById(id);
 	}
 
-
+	if(strcmp(token, "update")==0){
+		updateById();
+	}
     }
     
     return 0;
