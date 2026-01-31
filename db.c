@@ -60,6 +60,27 @@ void findById(int lid){
 		}
 	}
 }
+void deleteById(int lid){
+	printf("inside delete fun id is %d", lid);
+	int index;
+	for(int i=0; i<db_users; i++){
+		if(db[i]->id == lid){
+			index=i;
+		}
+		else{
+			printf("id not found , please enter a correct id\n");
+			return;
+		}
+	}
+
+	for(int i=index; i<db_users; i++){
+		db[i]=db[i+1];
+	}
+	db_users --;
+
+	printf("id:%d , user deleted susccessfuly !\n", lid);
+}
+
 int main(){
     char input[MAX_INPUT];
 
@@ -114,6 +135,15 @@ int main(){
 		int id=atoi(id_str);
 		findById(id);
 	}
+	//delete by id
+	if(strcmp(token , "delete")==0){
+		char *id_str= strtok(NULL, " ");
+		
+		int id=atoi(id_str);
+		deleteById(id);
+	}
+
+
     }
     
     return 0;
