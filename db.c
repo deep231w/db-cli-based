@@ -16,6 +16,21 @@ typedef struct
 User *db[MAX_USERS];
 int db_users=0;
 
+//add to file 
+void addUserToFile(int lid , char *lname , int lage){
+	printf("inside file writing");
+	FILE *fp=fopen("database.txt","a");
+
+	if(fp==NULL){
+		perror("error / file not opened");
+		return;
+	}
+	
+	fprintf(fp, "%d %s %d\n", lid, lname, lage);
+	printf("added user to file successfully!!");
+	fclose(fp);
+}
+//add user to db
 void addUserTodb(int lid , char *lname , int lage){
     User *ptr= (User *)malloc(sizeof(User));
     if(ptr ==NULL){
@@ -39,6 +54,8 @@ void addUserTodb(int lid , char *lname , int lage){
     ptr->age=lage;
     
     db[db_users++]=ptr;
+
+    addUserToFile(lid ,lname ,lage);
     printf("user data inside addusertodb func- %d %s %d\n", lid , lname , lage); 
 
     printf("user added to db successfully!\n");
