@@ -80,17 +80,19 @@ void findById(int lid){
 //delete/remove user  by id
 void deleteById(int lid){
 	printf("inside delete fun id is %d", lid);
-	int index;
+	int index=-1;
 	for(int i=0; i<db_users; i++){
 		if(db[i]->id == lid){
 			index=i;
 		}
-		else{
-			printf("id not found , please enter a correct id\n");
-			return;
-		}
+		
 	}
 
+	if(index==-1){
+		printf("id: %d not found , ",lid);
+	}
+
+	//free(db[index]);
 	for(int i=index; i<db_users; i++){
 		db[i]=db[i+1];
 	}
