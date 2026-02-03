@@ -172,6 +172,51 @@ int updateById(){
 
 
 }
+
+//load from file to memory
+void loadFromFile(){
+	FILE *fp=fopen("database.txt", "r");
+	if(fp==NULL){
+		perror("file opening failed!");
+		return;
+
+	}
+	char line[250];
+
+	while(fgets(line, sizeof(line), fp)){
+		if(db_users>=MAX_USERS){
+			printf("db full");
+			return;
+		}
+
+		int id , age;
+		char name[20];
+
+		if(sscanf(line , "%d %19s %d", &id ,name , &age)!=3){
+			printf("invaid line skipped - %s", line);
+			continue;
+		}
+
+
+
+		User *ptr =(User *)malloc(sizeof(User));
+
+		if(ptr==NULL){
+			printf("error allocating memory !");
+			return;
+		}
+
+		ptr->id=id;
+		ptr->age=age;
+		strcpy(ptr->name, name);
+
+		db[db_users++]=ptr;
+	}
+	fclose(fp);
+	printf("loaded data from file to memory\n");
+	return;	
+}
+
 int main(){
     char input[MAX_INPUT];
 
@@ -236,6 +281,13 @@ int main(){
 
 	if(strcmp(token, "update")==0){
 		updateById();
+	}
+
+	
+
+	//load to memoey from file
+	if(strcmp(token,"load")==0){
+		loadFromFile();
 	}
     }
     
