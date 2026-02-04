@@ -15,6 +15,7 @@ typedef struct
 
 User *db[MAX_USERS];
 int db_users=0;
+int next_id=0;
 
 //add to file 
 void addUserToFile(int lid , char *lname , int lage){
@@ -31,32 +32,30 @@ void addUserToFile(int lid , char *lname , int lage){
 	fclose(fp);
 }
 //add user to db
-void addUserTodb(int lid , char *lname , int lage){
+void addUserTodb( char *lname , int lage){
     User *ptr= (User *)malloc(sizeof(User));
     if(ptr ==NULL){
     	printf("memory allocation failed!\n");
 	return;
     }  
 	
-    for(int i=0; i<db_users ;i++){
-    	if(db[i]->id==lid){
-	   printf("the same id is already exist already , please add different id\n");
-	   free(ptr);
-	   return;
-	}
-    }
-
-    ptr->id=lid;
-    //for(int i=0; i<sizeof(lname);i++){
-    //	ptr->name[i]=lname[i];
+    //for(int i=0; i<db_users ;i++){
+    //	if(db[i]->id==lid){
+    //	   printf("the same id is already exist already , please add different id\n");
+    //	   free(ptr);
+    //	   return;		
+    //	}
     //}
+
+    ptr->id=next_id;
     strcpy(ptr->name,lname);
     ptr->age=lage;
     
     db[db_users++]=ptr;
 
-    addUserToFile(lid ,lname ,lage);
-    printf("user data inside addusertodb func- %d %s %d\n", lid , lname , lage); 
+    addUserToFile(db_users ,lname ,lage);
+    printf("user data inside addusertodb func- %d %s %d\n", next_id , lname , lage); 
+    next_id++;
 
     printf("user added to db successfully!\n");
 }
@@ -248,19 +247,19 @@ int main(){
         }
 
         if(strcmp(token, "add")==0){
-            char *id_str = strtok(NULL , " ");
+            //char *id_str = strtok(NULL , " ");
             char *name= strtok(NULL , " ");
             char *age_str= strtok(NULL , " ");
 
-	    if(!id_str || !name || !age_str){
-	    	printf("usage :add <id> <name><age>\n");
+	    if(!name || !age_str){
+	    	printf("usage :add <name><age>\n");
 		continue;
 	    }
-	    int id= atoi(id_str);
+	    //int id= atoi(id_str);
 	    int age=atoi(age_str);
 
 
-            addUserTodb(id , name , age);
+            addUserTodb( name , age);
         }
         
 	if(strcmp(token, "list")==0){
