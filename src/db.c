@@ -275,8 +275,17 @@ int main(){
 	//delete by id
 	if(strcmp(token , "delete")==0){
 		char *id_str= strtok(NULL, " ");
-		
+		if(!id_str){
+			printf("please add id alnong side the delete command!\nexample:delete 1\n");
+			continue;
+		}	
+
 		int id=atoi(id_str);
+		if(!id){
+			printf("plese enter an integer!\n");
+			continue;
+		}
+
 		deleteById(id);
 	}
 
